@@ -60,22 +60,7 @@ Utilice el siguiente comando para cargar los módulos:
 
 .. code-block:: bash
 
-   module load python/cunqa libraries/libffi-devel-8.1
-
-.. warning::
-
-   **Aviso Importante: Parche Temporal** 
-   
-   Para que Python detecte correctamente el framework CUNQA y sus dependencias internas, es
-   necesario configurar la variable de entorno ``PYTHONPATH``.
-   Actualmente estamos trabajando para que esta ruta se integre de
-   manera automática al cargar el módulo; mientras tanto, es necesario
-   aplicar este comando como parche temporal:
-
-   .. code-block:: bash
-
-      export PYTHONPATH=/lusitania_apps/cunqa:/lusitania_apps/cunqa/.venv/lib/python3.10/site-packages:/lusitania_apps/python/python-3.10-cunqa-ex/lib/python3.10/site-packages:$PYTHONPATH
-
+   module load python/cunqa
 
 Resolución de Conflictos (Module Swap)
 --------------------------------------
@@ -87,7 +72,7 @@ conflicto. Utilice ``swap`` para intercambiarlos:
 .. code-block:: bash
 
    # Si tiene conflictos con otra versión de Python module swap
-   python/python-version-actual python/cunqa
+   module swap python/python-version-actual python/cunqa
 
 Gestión de Recursos y Ciclo de Vida
 ===================================

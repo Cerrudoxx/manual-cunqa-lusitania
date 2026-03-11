@@ -1,0 +1,49 @@
+/* 1. Fondo del menú lateral izquierdo (donde va el logo y el buscador) */
+/* 2. Fondo de la barra superior en la versión para móviles */
+.wy-side-nav-search, .wy-nav-top {
+    background-color: #4FA392 !important;
+}
+
+/* 3. Color de los enlaces dentro del texto */
+.rst-content a {
+    color: #4FA392;
+}
+
+/* Color de los enlaces al pasar el ratón por encima (un verde un poco más oscuro) */
+.rst-content a:hover {
+    color: #3A7A6D;
+}
+
+/* 4. Color de los botones "Anterior" y "Siguiente" al pasar el ratón */
+.rst-content .btn-neutral:hover {
+    background-color: #4FA392 !important;
+    color: white !important;
+}
+/* --- ESTILOS PARA LA PORTADA --- */
+
+/* 5. Título gigante y centrado con el verde corporativo */
+.big-title {
+    font-size: 3em !important;
+    font-weight: bold;
+    text-align: center;
+    color: #4FA392; 
+    margin-top: 30px;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+/* 6. Contenedor para poner los logos lado a lado */
+.logo-container {
+    display: flex;
+    justify-content: center; /* Los centra horizontalmente */
+    align-items: center;     /* Los centra verticalmente si uno es más alto que otro */
+    gap: 50px;               /* Espacio de separación entre los dos logos */
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+/* Ajusta el tamaño máximo de los logos dentro del contenedor */
+.logo-container img {
+    max-width: 250px; /* Cámbialo si los quieres más grandes o más pequeños */
+    height: auto;
+}

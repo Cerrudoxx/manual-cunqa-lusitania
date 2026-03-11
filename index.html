@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introducción &mdash; documentación de Manual CUNQA Lusitania - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4bcdfe37" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4936afed"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Manual CUNQA Lusitania
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Introducción</a></li>
+<li><a class="reference internal" href="#carga-del-modulo-en-lusitania">Carga del Módulo en Lusitania</a><ul>
+<li><a class="reference internal" href="#carga-estandar-sesion-limpia">Carga Estándar (Sesión Limpia)</a></li>
+<li><a class="reference internal" href="#resolucion-de-conflictos-module-swap">Resolución de Conflictos (Module Swap)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gestion-de-recursos-y-ciclo-de-vida">Gestión de Recursos y Ciclo de Vida</a><ul>
+<li><a class="reference internal" href="#paso-1-iniciar-el-servicio-qraise">Paso 1: Iniciar el Servicio (qraise)</a><ul>
+<li><a class="reference internal" href="#tabla-completa-de-parametros">Tabla Completa de Parámetros</a></li>
+<li><a class="reference internal" href="#seleccion-de-particion-sinfo">Selección de Partición (<code class="docutils literal notranslate"><span class="pre">sinfo</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#monitorizacion-de-vqpus-squeue-y-qinfo">Monitorización de vQPUs (<code class="docutils literal notranslate"><span class="pre">squeue</span></code> y <code class="docutils literal notranslate"><span class="pre">qinfo</span></code>)</a><ul>
+<li><a class="reference internal" href="#paso-1-verificacion-de-recursos-en-slurm-squeue">Paso 1: Verificación de recursos en SLURM (<code class="docutils literal notranslate"><span class="pre">squeue</span></code>)</a></li>
+<li><a class="reference internal" href="#paso-2-inspeccion-interna-de-cunqa-qinfo">Paso 2: Inspección interna de CUNQA (<code class="docutils literal notranslate"><span class="pre">qinfo</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logs-y-depuracion">Logs y Depuración</a></li>
+<li><a class="reference internal" href="#liberacion-de-recursos-qdrop">Liberación de Recursos (<code class="docutils literal notranslate"><span class="pre">qdrop</span></code>)</a><ul>
+<li><a class="reference internal" href="#ejemplos-de-uso">Ejemplos de Uso</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ejecucion-de-experimentos">Ejecución de Experimentos</a><ul>
+<li><a class="reference internal" href="#flujo-1-despliegue-mixto-bash-python">Flujo 1: Despliegue Mixto (Bash + Python)</a></li>
+<li><a class="reference internal" href="#flujo-2-despliegue-100-en-python">Flujo 2: Despliegue 100% en Python</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#capacidades-avanzadas">Capacidades Avanzadas</a><ul>
+<li><a class="reference internal" href="#comunicaciones-clasicas-cc">Comunicaciones Clásicas (CC)</a></li>
+<li><a class="reference internal" href="#comunicaciones-cuanticas-qc">Comunicaciones Cuánticas (QC)</a><ul>
+<li><a class="reference internal" href="#teledata-teletransportacion-de-estado">Teledata (Teletransportación de Estado)</a></li>
+<li><a class="reference internal" href="#telegate-puertas-logicas-distribuidas">Telegate (Puertas Lógicas Distribuidas)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Manual CUNQA Lusitania</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introducción</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="titlepage docutils container">
+<a class="reference internal image-reference" href="_images/output-onlinepngtools.png"><img alt="Logo CUNQA" class="align-center" src="_images/output-onlinepngtools.png" style="width: 95%;" />
+</a>
+<p class="big-title">Manual de Uso de CUNQA 2.0</p>
+<div class="logo-container docutils container">
+<img alt="Logo CESGA" src="_images/logotipo_CESGA_original.jpg" />
+<img alt="Logo COMPUTAEX" src="_images/COMPUTAEX_nuevo.png" />
+</div>
+</div>
+<section id="introduccion">
+<h1>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading"></a></h1>
+<p>CUNQA es un emulador de Computación Cuántica Distribuida (DQC) diseñado
+nativamente para entornos HPC. Permite a los investigadores probar
+algoritmos distribuidos (usando vQPUs o Virtual QPUs) antes de que el
+hardware real esté disponible, integrándose transparentemente con el
+gestor de colas SLURM.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Nota sobre la Documentación y Código Fuente Este documento constituye
+un <strong>manual básico de inicio rápido</strong> adaptado específicamente para
+el entorno del clúster <strong>Lusitania</strong>.</p>
+<p>La versión desplegada en este clúster cuenta con parches de
+compatibilidad específicos y se encuentra alojada en un <em>fork</em> del
+repositorio original, disponible en:</p>
+<div class="center docutils container">
+<p><a class="reference external" href="https://github.com/Cerrudoxx/cunqa/tree/cunqa-ex-module-2">https://github.com/Cerrudoxx/cunqa/tree/cunqa-ex-module-2</a></p>
+</div>
+<p>Para consultar la documentación completa, detallada y oficial de
+CUNQA desarrollada por el CESGA, visite el siguiente enlace:</p>
+<div class="center docutils container">
+<p><a class="reference external" href="https://cesga-quantum-spain.github.io/cunqa/index.html">https://cesga-quantum-spain.github.io/cunqa/index.html</a></p>
+</div>
+</div>
+</section>
+<section id="carga-del-modulo-en-lusitania">
+<h1>Carga del Módulo en Lusitania<a class="headerlink" href="#carga-del-modulo-en-lusitania" title="Link to this heading"></a></h1>
+<p>Para utilizar la librería CUNQA en Lusitania, es necesario cargar el
+entorno y sus dependencias de compilación.</p>
+<section id="carga-estandar-sesion-limpia">
+<h2>Carga Estándar (Sesión Limpia)<a class="headerlink" href="#carga-estandar-sesion-limpia" title="Link to this heading"></a></h2>
+<p>Utilice el siguiente comando para cargar los módulos:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module<span class="w"> </span>load<span class="w"> </span>python/cunqa<span class="w"> </span>libraries/libffi-devel-8.1
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Aviso Importante: Parche Temporal Para que Python detecte
+correctamente el framework CUNQA y sus dependencias internas, es
+necesario configurar la variable de entorno <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>.
+Actualmente estamos trabajando para que esta ruta se integre de
+manera automática al cargar el módulo; mientras tanto, es necesario
+aplicar este comando como parche temporal:</p>
+</div>
+</section>
+<section id="resolucion-de-conflictos-module-swap">
+<h2>Resolución de Conflictos (Module Swap)<a class="headerlink" href="#resolucion-de-conflictos-module-swap" title="Link to this heading"></a></h2>
+<p>CUNQA requiere una versión específica de Python. Si usted ya tiene
+cargado otro módulo (ej. <code class="docutils literal notranslate"><span class="pre">python/3.10</span></code>), Lmod mostrará un error de
+conflicto. Utilice <code class="docutils literal notranslate"><span class="pre">swap</span></code> para intercambiarlos:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Si tiene conflictos con otra versión de Python module swap</span>
+python/python-version-actual<span class="w"> </span>python/cunqa
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gestion-de-recursos-y-ciclo-de-vida">
+<h1>Gestión de Recursos y Ciclo de Vida<a class="headerlink" href="#gestion-de-recursos-y-ciclo-de-vida" title="Link to this heading"></a></h1>
+<p>El flujo de trabajo en CUNQA consta de tres pasos: Iniciar Servicio
+(<code class="docutils literal notranslate"><span class="pre">qraise</span></code>), Ejecutar Experimentos (Python) y Detener Servicio
+(<code class="docutils literal notranslate"><span class="pre">qdrop</span></code>).</p>
+<section id="paso-1-iniciar-el-servicio-qraise">
+<h2>Paso 1: Iniciar el Servicio (qraise)<a class="headerlink" href="#paso-1-iniciar-el-servicio-qraise" title="Link to this heading"></a></h2>
+<p>El comando <code class="docutils literal notranslate"><span class="pre">qraise</span></code> solicita recursos a SLURM y levanta los daemons de
+simulación. En este ejemplo se solicitan 2 vQPUs durante 30 min:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qraise<span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span>-t<span class="w"> </span><span class="m">00</span>:30:00<span class="w"> </span>--co-located
+</pre></div>
+</div>
+<section id="tabla-completa-de-parametros">
+<h3>Tabla Completa de Parámetros<a class="headerlink" href="#tabla-completa-de-parametros" title="Link to this heading"></a></h3>
+<p>Opciones disponibles en <code class="docutils literal notranslate"><span class="pre">qraise</span></code> para el despliegue de vQPUs:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 30.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Flag</p></th>
+<th class="head"><p>Opción Larga</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-n</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--num_qpus</span> <span class="pre">&lt;int&gt;</span></code></p></td>
+<td><p>(Obligatorio) Número de vQPUs a levantar (Defecto: 0).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-t</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--time</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>(Obligatorio) Tiempo límite de la reserva (HH:MM:SS).</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--family_name</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>Nombre para identificar el grupo de vQPUs (Defecto: «default»).</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--co-located</span></code></p></td>
+<td><p><strong>Esencial en Lusitania.</strong> Permite acceder a las vQPUs desde cualquier nodo (ej. el nodo de login).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--cores</span> <span class="pre">&lt;int&gt;</span></code></p></td>
+<td><p>Número de cores de CPU asignados a cada vQPU (Defecto: 2).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-p</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--partition</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>Partición de SLURM solicitada para el despliegue.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--mem-per-qpu</span> <span class="pre">&lt;int&gt;</span></code></p></td>
+<td><p>Cantidad de memoria RAM (en GB) asignada a cada vQPU.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-N</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--n_nodes</span> <span class="pre">&lt;int&gt;</span></code></p></td>
+<td><p>Número total de nodos de cómputo a utilizar (Defecto: 1).</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--node_list</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>Lista explícita de nodos destino (ej. <code class="docutils literal notranslate"><span class="pre">s01r2b12,s01r2b13</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--qpus_per_node</span> <span class="pre">&lt;int&gt;</span></code></p></td>
+<td><p>Número de vQPUs a desplegar dentro de cada nodo físico.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--gpu</span></code></p></td>
+<td><p>Habilita la simulación cuántica acelerada por GPU.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--classical_comm</span></code></p></td>
+<td><p>Habilita las comunicaciones clásicas entre vQPUs.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--quantum_comm</span></code></p></td>
+<td><p>Habilita las comunicaciones cuánticas entre vQPUs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-sim</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--simulator</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>Motor responsable de ejecutar la simulación (Defecto: «Aer»).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--backend</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>Ruta al archivo de configuración del backend.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--noise-prop</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--noise-properties</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>Ruta al JSON de propiedades de ruido (Solo soportado en Aer).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-fq</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--fakeqmio</span> <span class="pre">&lt;str&gt;</span></code></p></td>
+<td><p>Simula el chip QMIO cargando un set de calibraciones (<em>Nota: Soportado oficialmente en CESGA</em>).</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--no-thermal-relaxation</span></code></p></td>
+<td><p>Desactiva la relajación térmica en backends ruidosos (Defecto: false).</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--no-readout-error</span></code></p></td>
+<td><p>Desactiva el error de lectura en backends ruidosos (Defecto: false).</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--no-gate-error</span></code></p></td>
+<td><p>Desactiva el error de puertas en backends ruidosos (Defecto: false).</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--qmio</span></code></p></td>
+<td><p>Despliega infraestructura híbrida conectando con el ordenador cuántico QMIO real (<em>Exclusivo de CESGA</em>).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="seleccion-de-particion-sinfo">
+<h3>Selección de Partición (<code class="docutils literal notranslate"><span class="pre">sinfo</span></code>)<a class="headerlink" href="#seleccion-de-particion-sinfo" title="Link to this heading"></a></h3>
+<p>En el clúster Lusitania, los nodos de cómputo están organizados en
+diferentes colas o particiones. Puede especificar en qué partición desea
+desplegar sus vQPUs utilizando el flag <code class="docutils literal notranslate"><span class="pre">-p</span></code> o <code class="docutils literal notranslate"><span class="pre">–partition</span></code> al
+ejecutar el comando <code class="docutils literal notranslate"><span class="pre">qraise</span></code>.</p>
+<p>Para consultar las particiones disponibles, los recursos libres y el
+estado general del clúster, ejecute el comando:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sinfo
+</pre></div>
+</div>
+<p><strong>Ejemplo de salida esperada:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>PARTITION<span class="w">   </span>AVAIL<span class="w">  </span>TIMELIMIT<span class="w">  </span>NODES<span class="w">  </span>STATE<span class="w"> </span>NODELIST
+qcomputaex<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">1</span><span class="w">  </span>alloc<span class="w"> </span>s02r2b05
+lusi2<span class="w">          </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">4</span><span class="w"> </span>drain*<span class="w"> </span>s02r2b<span class="o">[</span><span class="m">51</span>-54<span class="o">]</span>
+lusi2<span class="w">          </span>up<span class="w">   </span>infinite<span class="w">    </span><span class="m">108</span><span class="w">   </span>idle<span class="w"> </span>s02r1b<span class="o">[</span><span class="m">43</span>-83<span class="o">]</span>,s02r2b<span class="o">[</span><span class="m">11</span>-50,56-57,60-84<span class="o">]</span>
+atoms<span class="w">          </span>up<span class="w">   </span>infinite<span class="w">     </span><span class="m">14</span><span class="w">   </span>idle<span class="w"> </span>s02r1b<span class="o">[</span><span class="m">01</span>-12,15-16<span class="o">]</span>
+lusitania*<span class="w"> </span>up<span class="w">   </span>infinite<span class="w">     </span><span class="m">14</span><span class="w">   </span>idle<span class="w"> </span>s01r3b<span class="o">[</span><span class="m">03</span>-16<span class="o">]</span>
+uex10<span class="w">          </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">9</span><span class="w">  </span>alloc<span class="w"> </span>s01r2b<span class="o">[</span><span class="m">02</span>-10<span class="o">]</span>
+fatnode<span class="w">        </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">1</span><span class="w">    </span>mix<span class="w"> </span>fatcn
+</pre></div>
+</div>
+<p><strong>Interpretación de las columnas principales:</strong></p>
+<ul class="simple">
+<li><p><strong>PARTITION:</strong> Nombre de la cola de ejecución. El asterisco (<code class="docutils literal notranslate"><span class="pre">*</span></code>)
+indica cuál es la partición por defecto (en este caso,
+<code class="docutils literal notranslate"><span class="pre">lusitania</span></code>). Si no especifica el flag <code class="docutils literal notranslate"><span class="pre">-p</span></code>, su trabajo se
+enviará automáticamente a esta cola.</p></li>
+<li><p><strong>AVAIL:</strong> Estado operativo de la partición (<code class="docutils literal notranslate"><span class="pre">up</span></code> significa que
+está activa y admitiendo trabajos).</p></li>
+<li><p><strong>NODES:</strong> Cantidad de nodos físicos que se encuentran en el estado
+indicado.</p></li>
+<li><p><strong>STATE:</strong> Estado actual de los nodos. Los valores más comunes son:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">idle</span></code>: Libres y listos para ejecutar simulaciones.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alloc</span></code>: Totalmente ocupados por otros trabajos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mix</span></code>: Parcialmente ocupados (aún tienen algunos cores o memoria
+libre).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drain</span></code>: Fuera de servicio o reservados para mantenimiento.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="monitorizacion-de-vqpus-squeue-y-qinfo">
+<h2>Monitorización de vQPUs (<code class="docutils literal notranslate"><span class="pre">squeue</span></code> y <code class="docutils literal notranslate"><span class="pre">qinfo</span></code>)<a class="headerlink" href="#monitorizacion-de-vqpus-squeue-y-qinfo" title="Link to this heading"></a></h2>
+<p>Una vez solicitado el despliegue mediante el comando <code class="docutils literal notranslate"><span class="pre">qraise</span></code>, el
+proceso de monitorización para confirmar que todo está listo consta de
+dos pasos fundamentales: verificar la asignación en el gestor de colas y
+consultar el estado interno de CUNQA.</p>
+<section id="paso-1-verificacion-de-recursos-en-slurm-squeue">
+<h3>Paso 1: Verificación de recursos en SLURM (<code class="docutils literal notranslate"><span class="pre">squeue</span></code>)<a class="headerlink" href="#paso-1-verificacion-de-recursos-en-slurm-squeue" title="Link to this heading"></a></h3>
+<p>Antes de ejecutar su algoritmo en Python, es estrictamente necesario
+confirmar que el clúster le ha asignado los recursos y el trabajo ha
+comenzado. Para ello, compruebe la cola de trabajos:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>squeue
+</pre></div>
+</div>
+<p><strong>Salida esperada:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>JOBID<span class="w">   </span>PARTITION<span class="w">  </span>NAME<span class="w">    </span>USER<span class="w">      </span>ST<span class="w">  </span>TIME<span class="w">  </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<span class="m">718298</span><span class="w">  </span>lusitania<span class="w">  </span>qraise<span class="w">  </span>usuario<span class="w">   </span>R<span class="w">   </span><span class="m">0</span>:05<span class="w">  </span><span class="m">1</span><span class="w">     </span>s01r3b18
+</pre></div>
+</div>
+<p>Debe prestar especial atención a dos columnas:</p>
+<ul class="simple">
+<li><p><strong>ST (Status):</strong> Su trabajo debe marcar <strong>R</strong> (<em>Running</em>). Si marca
+<strong>PD</strong> (<em>Pending</em>), significa que está en la cola esperando a que
+haya nodos libres.</p></li>
+<li><p><strong>NODELIST:</strong> Esta columna revela el nombre del nodo físico exacto
+donde se han levantado sus vQPUs (en el ejemplo superior,
+<code class="docutils literal notranslate"><span class="pre">s01r3b18</span></code>). Anote este valor para el siguiente paso.</p></li>
+</ul>
+</section>
+<section id="paso-2-inspeccion-interna-de-cunqa-qinfo">
+<h3>Paso 2: Inspección interna de CUNQA (<code class="docutils literal notranslate"><span class="pre">qinfo</span></code>)<a class="headerlink" href="#paso-2-inspeccion-interna-de-cunqa-qinfo" title="Link to this heading"></a></h3>
+<p>Una vez que el trabajo está en estado <code class="docutils literal notranslate"><span class="pre">R</span></code>, puede emplear la
+herramienta nativa <code class="docutils literal notranslate"><span class="pre">qinfo</span></code> para obtener información detallada sobre
+las vQPUs que están corriendo bajo el capó (puertos abiertos, simulador
+empleado, etc.).</p>
+<p><strong>Opciones de consulta:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qinfo</span> <span class="pre">&lt;nodo&gt;</span></code>: Muestra el estado de las vQPUs alojadas en el nodo
+físico especificado por parámetro.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qinfo</span> <span class="pre">-m</span></code> o <code class="docutils literal notranslate"><span class="pre">--mynode</span></code>: Muestra el estado de las vQPUs locales al
+nodo donde se ejecuta el comando (muy útil si se utiliza dentro de un
+script <em>sbatch</em> o tras acceder directamente al nodo de cómputo).</p></li>
+</ul>
+<p><strong>Ejemplo de uso:</strong> Utilizando el nombre del nodo que descubrimos en el
+paso anterior (<code class="docutils literal notranslate"><span class="pre">s01r3b18</span></code>), ejecutamos desde el nodo de <em>login</em>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qinfo<span class="w"> </span>s01r3b18
+</pre></div>
+</div>
+</section>
+</section>
+<section id="logs-y-depuracion">
+<h2>Logs y Depuración<a class="headerlink" href="#logs-y-depuracion" title="Link to this heading"></a></h2>
+<p>Al solicitar un despliegue con <code class="docutils literal notranslate"><span class="pre">qraise</span></code>, el gestor de colas SLURM
+captura toda la salida estándar (mensajes de inicialización de CUNQA) y
+los posibles errores del sistema, guardándolos automáticamente en un
+archivo de texto. Este archivo se crea en el mismo directorio desde
+donde ejecutó el comando.</p>
+<p>El archivo generado sigue la nomenclatura <code class="docutils literal notranslate"><span class="pre">qraise_&lt;JOBID&gt;</span></code>. Para
+visualizar su contenido y comprobar que las vQPUs han arrancado
+correctamente, utilice el comando <code class="docutils literal notranslate"><span class="pre">cat</span></code> (sustituyendo el número por su
+identificador real):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>qraise_718298
+</pre></div>
+</div>
+<p><strong>Salida esperada:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="m">03</span>/11/26<span class="w"> </span><span class="m">10</span>:00:00<span class="w"> </span>AM<span class="o">)</span><span class="w"> </span><span class="o">[</span>Executor<span class="w"> </span><span class="m">718298</span><span class="o">]</span><span class="w"> </span>debug:<span class="w"> </span>Raising<span class="w"> </span>executor<span class="w"> </span>with<span class="w"> </span>Aer.
+<span class="o">(</span><span class="m">03</span>/11/26<span class="w"> </span><span class="m">10</span>:00:01<span class="w"> </span>AM<span class="o">)</span><span class="w"> </span><span class="o">[</span>QPU<span class="w"> </span>718298_0<span class="o">]</span><span class="w"> </span>debug:<span class="w"> </span>Raising<span class="w"> </span>QPU<span class="w"> </span>with<span class="w"> </span>quantum<span class="w"> </span>communications.
+<span class="o">(</span><span class="m">03</span>/11/26<span class="w"> </span><span class="m">10</span>:00:01<span class="w"> </span>AM<span class="o">)</span><span class="w"> </span><span class="o">[</span>QPU<span class="w"> </span>718298_0<span class="o">]</span><span class="w"> </span>debug:<span class="w"> </span>Server<span class="w"> </span>bound<span class="w"> </span>to<span class="w"> </span>tcp://10.2.1.38:38105
+<span class="o">(</span><span class="m">03</span>/11/26<span class="w"> </span><span class="m">10</span>:00:01<span class="w"> </span>AM<span class="o">)</span><span class="w"> </span><span class="o">[</span>QPU<span class="w"> </span>718298_1<span class="o">]</span><span class="w"> </span>debug:<span class="w"> </span>Server<span class="w"> </span>bound<span class="w"> </span>to<span class="w"> </span>tcp://10.2.1.38:42083
+</pre></div>
+</div>
+<p><strong>¿Qué debemos buscar en este archivo?</strong></p>
+<ul class="simple">
+<li><p><strong>Inicialización (``Raising…``):</strong> Confirma el motor de simulación
+que se está utilizando (ej. <code class="docutils literal notranslate"><span class="pre">Aer</span></code>) y si los protocolos de
+comunicación (cuántica o clásica) se han activado correctamente.</p></li>
+<li><p><strong>Apertura de puertos (``Server bound to…``):</strong> Es la señal
+definitiva de éxito. Indica la dirección IP interna y el puerto por
+donde la QPU virtual está escuchando instrucciones. <strong>Una vez vea
+estas líneas, las vQPUs están listas para recibir comandos desde su
+script de Python.</strong></p></li>
+<li><p><strong>Errores de SLURM:</strong> Si el trabajo falla prematuramente (por
+ejemplo, por solicitar más cores de los permitidos o por falta de
+librerías dinámicas), los errores fatales de <code class="docutils literal notranslate"><span class="pre">srun</span></code> aparecerán en
+las primeras líneas de este log.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Truco de Experto: Monitorización en tiempo real Si el clúster está
+muy saturado o el trabajo tarda en arrancar, puede monitorizar la
+creación del log en tiempo real (como si fuera una pantalla de
+terminal en vivo) utilizando el comando <code class="docutils literal notranslate"><span class="pre">tail</span></code>. Para salir de esta
+vista interactiva, simplemente pulse <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">C</span></code>:</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tail<span class="w"> </span>-f<span class="w"> </span>qraise_718298
+</pre></div>
+</div>
+</section>
+<section id="liberacion-de-recursos-qdrop">
+<h2>Liberación de Recursos (<code class="docutils literal notranslate"><span class="pre">qdrop</span></code>)<a class="headerlink" href="#liberacion-de-recursos-qdrop" title="Link to this heading"></a></h2>
+<p>El comando <code class="docutils literal notranslate"><span class="pre">qdrop</span></code> se utiliza para terminar (<em>drop</em>) las QPUs
+virtuales que fueron desplegadas previamente con <code class="docutils literal notranslate"><span class="pre">qraise</span></code>. Al ejecutar
+este comando, se cancelan los trabajos asociados en SLURM y se liberan
+los recursos computacionales del clúster.</p>
+<p>Aunque el servicio se detiene automáticamente al alcanzar el tiempo
+límite (<code class="docutils literal notranslate"><span class="pre">-t</span></code>) asignado por SLURM, es una <strong>buena práctica en entornos
+HPC</strong> liberar los recursos manualmente en cuanto su algoritmo termine de
+ejecutarse para que otros usuarios puedan utilizarlos.</p>
+<p><strong>Sinopsis del comando:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qdrop<span class="w"> </span><span class="o">[</span>IDS...<span class="o">]</span><span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p><strong>Opciones de selección de objetivos:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">IDS...</span></code>: IDs de los trabajos de SLURM que se desean eliminar. Se
+pueden proporcionar múltiples IDs separados por espacios.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">–fam</span></code>, <code class="docutils literal notranslate"><span class="pre">--family_name</span> <span class="pre">&lt;str&gt;</span></code> Elimina todas las vQPUs que
+pertenezcan a la familia especificada (útil si usó el flag <code class="docutils literal notranslate"><span class="pre">-fam</span></code>
+al levantarlas).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--all</span></code>: Elimina todos los trabajos activos de <code class="docutils literal notranslate"><span class="pre">qraise</span></code> del
+usuario actual.</p></li>
+</ul>
+<section id="ejemplos-de-uso">
+<h3>Ejemplos de Uso<a class="headerlink" href="#ejemplos-de-uso" title="Link to this heading"></a></h3>
+<p><strong>Opción A: Detener trabajos específicos (por ID)</strong> Puede detener un
+único trabajo o varios a la vez pasando sus identificadores separados
+por un espacio:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qdrop<span class="w"> </span><span class="m">718298</span><span class="w"> </span><span class="m">718299</span>
+</pre></div>
+</div>
+<p><strong>Salida esperada:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Removed<span class="w"> </span>job<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>with<span class="w"> </span>ID<span class="o">(</span>s<span class="o">)</span>:<span class="w"> </span><span class="m">718298</span>,<span class="w"> </span><span class="m">718299</span>
+</pre></div>
+</div>
+<p><strong>Opción B: Detener por familia</strong> Si levantó un conjunto de vQPUs bajo
+una misma etiqueta, puede borrarlas todas de golpe sin necesidad de
+buscar sus IDs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qdrop<span class="w"> </span>--family_name<span class="w"> </span>grover_est
+</pre></div>
+</div>
+<p><strong>Opción C: Limpieza total (``–all``)</strong> El método más rápido y
+recomendado si ya ha terminado su sesión de trabajo y quiere asegurarse
+de no dejar ningún proceso «fantasma» consumiendo horas de cómputo en
+Lusitania:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qdrop<span class="w"> </span>--all
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Nota sobre filtros combinados Si se proporcionan múltiples selectores
+a la vez (por ejemplo, especificando un <code class="docutils literal notranslate"><span class="pre">ID</span></code> y además una
+<code class="docutils literal notranslate"><span class="pre">--family_name</span></code>), el omando <code class="docutils literal notranslate"><span class="pre">qdrop</span></code> intentará eliminar <strong>todas</strong>
+las vQPUs que coincidan con cualquiera de los criterios indicados.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="ejecucion-de-experimentos">
+<h1>Ejecución de Experimentos<a class="headerlink" href="#ejecucion-de-experimentos" title="Link to this heading"></a></h1>
+<p>CUNQA permite dos flujos de trabajo principales para desplegar las vQPUs
+y ejecutar sus circuitos cuánticos: un enfoque mixto (desplegando desde
+la terminal y ejecutando en Python) y un enfoque 100% programático desde
+Python.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>¡Atención: Configuración Crítica en Lusitania! En el clúster
+Lusitania, es <strong>obligatorio</strong> que las vQPUs se levanten en modo
+<em>co-located</em>.</p>
+<p>Dado que SLURM asignará los recursos a nodos de cómputo distintos al
+nodo de <em>login</em> donde usted ejecuta el script, debe usar
+<code class="docutils literal notranslate"><span class="pre">--co-located</span></code> en la terminal y el parámetro <code class="docutils literal notranslate"><span class="pre">co_located=True</span></code>
+dentro de la función <code class="docutils literal notranslate"><span class="pre">get_QPUs()</span></code>. Si no lo hace, su script de
+Python no encontrará las máquinas virtuales.</p>
+</div>
+<section id="flujo-1-despliegue-mixto-bash-python">
+<h2>Flujo 1: Despliegue Mixto (Bash + Python)<a class="headerlink" href="#flujo-1-despliegue-mixto-bash-python" title="Link to this heading"></a></h2>
+<p>Este es el método más recomendado, ya que separa la reserva de recursos
+en SLURM de la lógica del algoritmo.</p>
+<p><strong>1. Levantar las vQPUs desde la terminal:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qraise<span class="w"> </span>-n<span class="w"> </span><span class="m">4</span><span class="w"> </span>-t<span class="w"> </span><span class="m">01</span>:00:00<span class="w"> </span>--co-located
+</pre></div>
+</div>
+<p><strong>2. Ejecutar el código Python:</strong></p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">demo_mixto.py</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_QPUs</span><span class="p">,</span> <span class="n">run</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qjob</span><span class="w"> </span><span class="kn">import</span> <span class="n">gather</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.circuit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CunqaCircuit</span>
+
+<span class="c1"># 1. Obtener las QPUs levantadas previamente por bash (Critico: co_located=True)</span>
+<span class="n">qpus</span> <span class="o">=</span> <span class="n">get_QPUs</span><span class="p">(</span><span class="n">co_located</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 2. Definir un circuito de entrelazamiento (Bell State)</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+<span class="c1"># 3. Enviar el mismo circuito a las 4 vQPUs a la vez</span>
+<span class="n">qcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">qc</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="n">qjobs</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">qcs</span><span class="p">,</span> <span class="n">qpus</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># 4. Recopilar e imprimir los resultados</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">gather</span><span class="p">(</span><span class="n">qjobs</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;vQPU </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> -&gt; Counts: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="flujo-2-despliegue-100-en-python">
+<h2>Flujo 2: Despliegue 100% en Python<a class="headerlink" href="#flujo-2-despliegue-100-en-python" title="Link to this heading"></a></h2>
+<p>En este caso, la reserva de recursos en SLURM, la ejecución y la
+liberación de los mismos se realiza de principio a fin dentro del mismo
+script de Python.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">demo_python.py</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">qraise</span><span class="p">,</span> <span class="n">get_QPUs</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">qdrop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qjob</span><span class="w"> </span><span class="kn">import</span> <span class="n">gather</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.circuit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CunqaCircuit</span>
+
+<span class="c1"># 1. Desplegar QPUs directamente desde Python</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solicitando recursos a SLURM...&quot;</span><span class="p">)</span>
+<span class="n">family</span> <span class="o">=</span> <span class="n">qraise</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;00:10:00&quot;</span><span class="p">,</span> <span class="n">simulator</span><span class="o">=</span><span class="s2">&quot;Aer&quot;</span><span class="p">,</span> <span class="n">co_located</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 2. Conectar con las QPUs reservadas</span>
+<span class="n">qpus</span> <span class="o">=</span> <span class="n">get_QPUs</span><span class="p">(</span><span class="n">co_located</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 3. Ejecutar circuito</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">qjobs</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="n">qc</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">qpus</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># 4. Mostrar resultados</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">gather</span><span class="p">(</span><span class="n">qjobs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Counts: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 5. Liberar los recursos de SLURM</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Liberando recursos...&quot;</span><span class="p">)</span>
+<span class="n">qdrop</span><span class="p">(</span><span class="n">family</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Resumen del Ciclo de Vida Correcto:</strong> Sea cual sea el flujo que elija,
+es fundamental respetar el orden secuencial de operaciones para evitar
+recursos huérfanos o errores de conexión en el clúster:</p>
+<ol class="arabic simple">
+<li><p><strong>Reserva:</strong> Iniciar el entorno solicitando los nodos a SLURM
+(<code class="docutils literal notranslate"><span class="pre">qraise</span></code>).</p></li>
+<li><p><strong>Verificación:</strong> Si usa el flujo mixto, asegurarse mediante
+<code class="docutils literal notranslate"><span class="pre">squeue</span></code> de que el trabajo ha pasado a estado <code class="docutils literal notranslate"><span class="pre">R</span></code> (Running) y los
+puertos están abiertos.</p></li>
+<li><p><strong>Ejecución:</strong> Lanzar la lógica de su circuito (<code class="docutils literal notranslate"><span class="pre">run</span></code> y
+<code class="docutils literal notranslate"><span class="pre">gather</span></code>).</p></li>
+<li><p><strong>Finalización:</strong> Apagar las vQPUs y liberar los nodos físicos con
+<code class="docutils literal notranslate"><span class="pre">qdrop</span></code>.</p></li>
+</ol>
+</section>
+</section>
+<section id="capacidades-avanzadas">
+<h1>Capacidades Avanzadas<a class="headerlink" href="#capacidades-avanzadas" title="Link to this heading"></a></h1>
+<p>CUNQA permite emular arquitecturas de computación distribuida complejas.
+Para ello, es necesario iniciar las vQPUs con los flags adecuados y
+utilizar la API extendida de la clase <code class="docutils literal notranslate"><span class="pre">CunqaCircuit</span></code>.</p>
+<section id="comunicaciones-clasicas-cc">
+<h2>Comunicaciones Clásicas (CC)<a class="headerlink" href="#comunicaciones-clasicas-cc" title="Link to this heading"></a></h2>
+<p>Este modelo permite a los procesos intercambiar información clásica
+durante la ejecución (de forma similar a como operan los programas MPI
+en entornos HPC tradicionales). En el contexto cuántico, se utiliza para
+enviar los resultados de medidas (bits clásicos) de una vQPU remota a
+otra.</p>
+<p>Esto es fundamental para algoritmos que requieren <em>feed-forward</em> (tomar
+decisiones dinámicas sobre operaciones cuánticas locales basadas en los
+resultados de una medida remota), como ocurre en la Teleportación
+Cuántica o en los códigos de Corrección de Errores.</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p><strong>Requisito de Infraestructura</strong></p>
+<p>Para habilitar los canales de comunicación clásicos entre nodos (vía ZeroMQ), es <strong>obligatorio</strong>
+iniciar <code class="docutils literal notranslate"><span class="pre">qraise</span></code> con el flag <code class="docutils literal notranslate"><span class="pre">--classical_comm</span></code> en la terminal (o
+<code class="docutils literal notranslate"><span class="pre">classical_comm=True</span></code> si levanta las vQPUs desde Python). Además,
+recuerde mantener siempre activo el modo <code class="docutils literal notranslate"><span class="pre">co_located</span></code>.</p>
+</div>
+<p><strong>Primitivas de la API de CUNQA 2.0:</strong> Para poder condicionar
+operaciones en base a bits remotos, debe asignar un <code class="docutils literal notranslate"><span class="pre">id</span></code> único a cada
+circuito y seguir estos tres pasos usando los métodos de la clase
+<code class="docutils literal notranslate"><span class="pre">CunqaCircuit</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Medir y Enviar (``send``):</strong> Tras medir un qubit y guardar el valor
+en un bit clásico local, utilice <code class="docutils literal notranslate"><span class="pre">send(clbits,</span> <span class="pre">recving_circuit)</span></code>
+para transmitir ese bit al circuito destino.</p></li>
+<li><p><strong>Recibir (``recv``):</strong> En el circuito destino, utilice
+<code class="docutils literal notranslate"><span class="pre">recv(clbits,</span> <span class="pre">sending_circuit)</span></code> para capturar la transmisión y
+almacenarla en el registro clásico local. <em>Nota: La ejecución de este
+circuito se bloqueará hasta que el bit sea recibido.</em></p></li>
+<li><p><strong>Control Condicional (``cif``):</strong> Utilice el bloque de contexto
+<code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">circuit.cif(clbits)</span> <span class="pre">as</span> <span class="pre">subcircuit:</span></code> para aplicar operaciones
+cuánticas (ej. una puerta X) únicamente si el valor del bit clásico
+recibido es 1.</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Ejemplo: Control Clásico Remoto entre dos vQPUs</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_QPUs</span><span class="p">,</span> <span class="n">qraise</span><span class="p">,</span> <span class="n">qdrop</span><span class="p">,</span> <span class="n">run</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.circuit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CunqaCircuit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qjob</span><span class="w"> </span><span class="kn">import</span> <span class="n">gather</span>
+
+<span class="c1"># 1. Reservar 2 vQPUs con comunicaciones clasicas habilitadas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solicitando nodos a SLURM...&quot;</span><span class="p">)</span>
+<span class="n">family</span> <span class="o">=</span> <span class="n">qraise</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;00:10:00&quot;</span><span class="p">,</span> <span class="n">classical_comm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">co_located</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">qpus</span> <span class="o">=</span> <span class="n">get_QPUs</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">family</span><span class="p">,</span> <span class="n">co_located</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 2. Definir los circuitos y sus IDs (vital para el enrutamiento de red)</span>
+<span class="n">circuit_1</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_clbits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;circuit_1&quot;</span><span class="p">)</span>
+<span class="n">circuit_2</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_clbits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;circuit_2&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- LOGICA DEL EMISOR (circuit_1) ---</span>
+<span class="n">circuit_1</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit_1</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">clbit</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit_1</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">clbits</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">recving_circuit</span><span class="o">=</span><span class="s2">&quot;circuit_2&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- LOGICA DEL RECEPTOR (circuit_2) ---</span>
+<span class="c1"># Recibe el bit de circuit_1 y lo guarda en su clbit 0 local</span>
+<span class="n">circuit_2</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">clbits</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sending_circuit</span><span class="o">=</span><span class="s2">&quot;circuit_1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Aplica una puerta X en su qubit 0 solo si el clbit 0 recibido vale 1</span>
+<span class="k">with</span> <span class="n">circuit_2</span><span class="o">.</span><span class="n">cif</span><span class="p">(</span><span class="n">clbits</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">subcircuit</span><span class="p">:</span>
+    <span class="n">subcircuit</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">circuit_2</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">clbit</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 3. Ejecucion distribuida</span>
+<span class="c1"># CUNQA mapea automaticamente circuit_1 a qpus y circuit_2 a qpus</span>
+<span class="n">distributed_qjobs</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="n">circuit_1</span><span class="p">,</span> <span class="n">circuit_2</span><span class="p">],</span> <span class="n">qpus</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">gather</span><span class="p">(</span><span class="n">distributed_qjobs</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">qpu</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">qpus</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resultados de vQPU </span><span class="si">{</span><span class="n">qpu</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 4. Limpieza de recursos</span>
+<span class="n">qdrop</span><span class="p">(</span><span class="n">family</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="comunicaciones-cuanticas-qc">
+<h2>Comunicaciones Cuánticas (QC)<a class="headerlink" href="#comunicaciones-cuanticas-qc" title="Link to this heading"></a></h2>
+<p>Este paradigma es exclusivo de la computación cuántica distribuida y no
+tiene contraparte clásica. Habilita la transferencia de información
+cuántica (estados superpuestos o entrelazados) entre diferentes vQPUs
+mediante el consumo de pares entrelazados (EPR pairs) compartidos
+previamente.</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p><strong>Requisito de Infraestructura</strong></p>
+<p>Para utilizar estos protocolos, es <strong>obligatorio</strong> iniciar <code class="docutils literal notranslate"><span class="pre">qraise</span></code> con el flag <code class="docutils literal notranslate"><span class="pre">--quantum_comm</span></code> (o
+<code class="docutils literal notranslate"><span class="pre">quantum_comm=True</span></code> desde Python).</p>
+<p><em>Nota:</em> Al habilitar las comunicaciones cuánticas, las directivas de
+comunicación clásica (CC) detalladas en la sección anterior quedan
+automáticamente permitidas en sus circuitos. Recuerde mantener
+siempre el modo <code class="docutils literal notranslate"><span class="pre">co_located</span></code>.</p>
+</div>
+<section id="teledata-teletransportacion-de-estado">
+<h3>Teledata (Teletransportación de Estado)<a class="headerlink" href="#teledata-teletransportacion-de-estado" title="Link to this heading"></a></h3>
+<p>El protocolo <em>Teledata</em> mueve el estado cuántico exacto de un qubit
+desde una vQPU hacia otra. Debido al teorema de no clonación de la
+mecánica cuántica, el estado en el qubit de origen se destruye y <strong>se
+resetea automáticamente al estado :math:`|0rangle`</strong> tras el envío.</p>
+<p>En la API de CUNQA, esto se implementa mediante las primitivas <code class="docutils literal notranslate"><span class="pre">qsend</span></code>
+y <code class="docutils literal notranslate"><span class="pre">qrecv</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Ejemplo: Construcción remota de un estado entrelazado (Teledata)</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_QPUs</span><span class="p">,</span> <span class="n">qraise</span><span class="p">,</span> <span class="n">qdrop</span><span class="p">,</span> <span class="n">run</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.circuit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CunqaCircuit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cunqa.qjob</span><span class="w"> </span><span class="kn">import</span> <span class="n">gather</span>
+
+<span class="c1"># 1. Despliegue con comunicaciones cuanticas</span>
+<span class="n">family</span> <span class="o">=</span> <span class="n">qraise</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;00:10:00&quot;</span><span class="p">,</span> <span class="n">quantum_comm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">co_located</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">qpus</span> <span class="o">=</span> <span class="n">get_QPUs</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">family</span><span class="p">,</span> <span class="n">co_located</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 2. Diseño de circuitos</span>
+<span class="n">circuit_1</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;circuit_1&quot;</span><span class="p">)</span>
+<span class="n">circuit_2</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;circuit_2&quot;</span><span class="p">)</span>
+
+<span class="c1"># Entrelazamos los qubits locales del circuito 1</span>
+<span class="n">circuit_1</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit_1</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># --- INICIO PROTOCOLO TELEDATA ---</span>
+<span class="c1"># Teleportamos el estado del qubit 1 (del circuit_1) al qubit 0 (del circuit_2)</span>
+<span class="n">circuit_1</span><span class="o">.</span><span class="n">qsend</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;circuit_2&quot;</span><span class="p">)</span>
+<span class="n">circuit_2</span><span class="o">.</span><span class="n">qrecv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;circuit_1&quot;</span><span class="p">)</span>
+<span class="c1"># --- FIN PROTOCOLO TELEDATA ---</span>
+
+<span class="c1"># Continuamos operando en el circuito destino</span>
+<span class="n">circuit_2</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">circuit_1</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">circuit_2</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+<span class="c1"># 3. Ejecucion y Limpieza (gather bloquea hasta terminar ambas simulaciones)</span>
+<span class="n">qjobs</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="n">circuit_1</span><span class="p">,</span> <span class="n">circuit_2</span><span class="p">],</span> <span class="n">qpus</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">qpu</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">qpus</span><span class="p">,</span> <span class="n">gather</span><span class="p">(</span><span class="n">qjobs</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resultados de vQPU </span><span class="si">{</span><span class="n">qpu</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">qdrop</span><span class="p">(</span><span class="n">family</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="telegate-puertas-logicas-distribuidas">
+<h3>Telegate (Puertas Lógicas Distribuidas)<a class="headerlink" href="#telegate-puertas-logicas-distribuidas" title="Link to this heading"></a></h3>
+<p>El protocolo <em>Telegate</em> permite ejecutar una puerta de dos qubits (como
+una CNOT) donde el qubit de control reside físicamente en una vQPU y el
+qubit objetivo (<em>target</em>) en otra.</p>
+<p>A nivel de código, esto se logra «exponiendo» un qubit local para que un
+circuito remoto pueda referenciarlo temporalmente:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Ejemplo: Puerta CNOT Distribuida (Telegate)</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">circuit_A</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;circuito_A&quot;</span><span class="p">)</span>
+<span class="n">circuit_B</span> <span class="o">=</span> <span class="n">CunqaCircuit</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;circuito_B&quot;</span><span class="p">)</span>
+
+<span class="n">circuit_A</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># QPU A tiene el control (qubit 0) y lo expone a la QPU B</span>
+<span class="k">with</span> <span class="n">circuit_A</span><span class="o">.</span><span class="n">expose</span><span class="p">(</span><span class="n">qubit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_circuit</span><span class="o">=</span><span class="s2">&quot;circuito_B&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ctrl_ref</span><span class="p">:</span>
+
+    <span class="c1"># Dentro de este bloque, &#39;ctrl_ref&#39; es un enlace cuantico valido para B</span>
+    <span class="c1"># Aplicamos una CNOT controlada por A y con target en el qubit 1 de B</span>
+    <span class="n">circuit_B</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">control</span><span class="o">=</span><span class="n">ctrl_ref</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">circuit_A</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">circuit_B</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Nota sobre el rendimiento (Execution):</strong> Cuando se solicitan
+comunicaciones cuánticas, las vQPUs desplegadas comparten internamente
+un simulador conjunto por debajo (ZeroMQ/MPI). Por lo tanto, la llamada
+a <code class="docutils literal notranslate"><span class="pre">gather()</span></code> es estrictamente bloqueante y esperará a que toda la
+simulación global haya concluido para devolver los resultados y los
+tiempos de ejecución (<code class="docutils literal notranslate"><span class="pre">result.time_taken</span></code>).</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2026, Fundación COMPUTAEX.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

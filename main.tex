@@ -1,0 +1,724 @@
+\documentclass[a4paper,11pt]{article}
+
+% --- Paquetes Fundamentales ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{listings}     % Para bloques de código
+\usepackage{hyperref}     % Para enlaces
+\usepackage{tcolorbox}    % Para cajas de colores
+\newtcolorbox{infobox}[1]{colback=yellow!10!white,colframe=yellow!50!black,title=#1}
+\usepackage{graphicx}     % Para insertar imágenes
+\usepackage{booktabs}     % Para tablas profesionales
+\usepackage{array}        % Para mejor formato de tablas
+\usepackage{float}        % Para posicionamiento de imágenes
+\usepackage{upquote} % Fuerza que las comillas simples y dobles se copien bien en código
+
+% --- PAQUETES DE CAJAS AVANZADOS (Estilo Terminal) ---
+\tcbuselibrary{listings, skins, breakable}
+
+% --- Configuración de márgenes ---
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+% --- Configuración de enlaces ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Manual CUNQA Lusitania},
+}
+
+% --- Definición de Colores ---
+\definecolor{cesgablue}{RGB}{0, 85, 150} 
+\definecolor{terminalbg}{RGB}{40, 42, 54} 
+\definecolor{terminaltext}{RGB}{248, 248, 242}
+\definecolor{promptcolor}{RGB}{80, 250, 123} 
+\definecolor{commandcolor}{RGB}{255, 121, 198} 
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{codegreen}{rgb}{0.0,0.4,0.0}
+\definecolor{codeblue}{rgb}{0.0,0.0,0.6}
+\definecolor{codered}{rgb}{0.6,0.0,0.0}
+
+% --- ESTILO DE TERMINAL (Estilo macOS/Linux Moderno) ---
+\lstdefinestyle{terminalstyle}{
+    language=bash,
+    basicstyle=\color{terminaltext}\ttfamily\small,
+    keywordstyle=\color{commandcolor}\bfseries,
+    morekeywords={module, export, qraise, qdrop, sinfo, squeue, python3, cat, ls, nano, chmod},
+    commentstyle=\color{gray!60},
+    stringstyle=\color{yellow!90!orange},
+    showstringspaces=false,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    literate={usuario@lusitania}{{\textcolor{promptcolor}{\textbf{usuario@lusitania}}}}1
+             {~>}{{\textcolor{white}{\textbf{\textasciitilde>}}}}2
+             {-}{{-}}1
+             {\$}{{\textdollar}}1 % <--- AHORA SÍ: Dibuja el símbolo literal sin matemáticas
+             {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+             {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1
+}
+
+\newtcblisting{terminal}[1][]{
+    colback=terminalbg,
+    colframe=gray!30!black,
+    listing only,
+    listing options={style=terminalstyle},
+    halign title=center,
+    fonttitle=\bfseries\small,
+    enhanced,
+    arc=6pt,
+    drop shadow,
+    overlay={
+        \node[circle,fill=red!60,inner sep=2pt] at ([xshift=14pt,yshift=-11pt]frame.north west) {};
+        \node[circle,fill=yellow!60,inner sep=2pt] at ([xshift=26pt,yshift=-11pt]frame.north west) {};
+        \node[circle,fill=green!60,inner sep=2pt] at ([xshift=38pt,yshift=-11pt]frame.north west) {};
+    },
+    #1
+}
+
+% --- Estilo de Python ---
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codegray},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue}\bfseries,
+    stringstyle=\color{codered},
+    basicstyle=\ttfamily\small,
+    breaklines=true,                 
+    captionpos=b,                    
+    numbers=left,                    
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    rulecolor=\color{gray}
+}
+
+\begin{document}
+
+% ==========================================
+% PORTADA
+% ==========================================
+\begin{titlepage}
+    \centering
+    \null \vspace*{\fill}
+    
+    % LOGO PRINCIPAL
+    \includegraphics[width=0.5\textwidth]{imagenes/output-onlinepngtools.png} 
+    
+    \vspace{2cm}
+    {\Huge \textbf{Manual de Uso de CUNQA 2.0}\par}
+    \vspace{0.5cm}
+    {\LARGE Clúster Lusitania\par}
+    
+    \vspace{1.5cm}
+    {\Large Fundación COMPUTAEX\par}
+    {\large Marzo 2026\par}
+    
+    \vspace{3cm}
+    
+    % LOGOS SECUNDARIOS
+    \begin{minipage}{0.40\textwidth}
+        \centering
+        \includegraphics[width=0.85\linewidth]{imagenes/logotipo_CESGA_original.jpg}
+    \end{minipage}
+    \hspace{0.5cm}
+    \begin{minipage}{0.40\textwidth}
+        \centering
+        \includegraphics[width=0.85\linewidth]{imagenes/COMPUTAEX_nuevo.png}
+    \end{minipage}
+
+    \vspace*{\fill}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ==========================================
+% INTRODUCCIÓN
+% ==========================================
+\section{Introducción}
+
+CUNQA es un emulador de Computación Cuántica Distribuida (DQC) diseñado nativamente para entornos HPC. Permite a los investigadores probar algoritmos distribuidos (usando vQPUs o Virtual QPUs) antes de que el hardware real esté disponible, integrándose transparentemente con el gestor de colas SLURM.
+
+\begin{infobox}{Nota sobre la Documentación y Código Fuente}
+Este documento constituye un \textbf{manual básico de inicio rápido} adaptado específicamente para el entorno del clúster \textbf{Lusitania}.
+
+La versión desplegada en este clúster cuenta con parches de compatibilidad específicos y se encuentra alojada en un \textit{fork} del repositorio original, disponible en:
+\begin{center}
+    \url{https://github.com/Cerrudoxx/cunqa/tree/cunqa-ex-module-2}
+\end{center}
+
+\vspace{0.2cm}
+
+Para consultar la documentación completa, detallada y oficial de CUNQA desarrollada por el CESGA, visite el siguiente enlace:
+\begin{center}
+    \url{https://cesga-quantum-spain.github.io/cunqa/index.html}
+\end{center}
+\end{infobox}
+
+% ==========================================
+% 1. CARGA DEL MÓDULO
+% ==========================================
+\section{Carga del Módulo en Lusitania}
+
+Para utilizar la librería CUNQA en Lusitania, es necesario cargar el entorno y sus dependencias de compilación.
+
+\subsection{Carga Estándar (Sesión Limpia)}
+Utilice el siguiente comando para cargar los módulos:
+
+\begin{terminal}
+module load python/cunqa libraries/libffi-devel-8.1
+\end{terminal}
+
+\begin{infobox}{Aviso Importante: Parche Temporal}
+Para que Python detecte correctamente el framework CUNQA y sus dependencias internas, es necesario configurar la variable de entorno \texttt{PYTHONPATH}. Actualmente estamos trabajando para que esta ruta se integre de manera automática al cargar el módulo; mientras tanto, es necesario aplicar este comando como parche temporal:
+\end{infobox}
+
+\begin{terminal}
+export PYTHONPATH=/lusitania_apps/cunqa:/lusitania_apps/cunqa/.venv/lib/python3.10/site-packages:/lusitania_apps/python/python-3.10-cunqa-ex/lib/python3.10/site-packages:$PYTHONPATH
+\end{terminal}
+
+\subsection{Resolución de Conflictos (Module Swap)}
+CUNQA requiere una versión específica de Python. Si usted ya tiene cargado otro módulo (ej. \texttt{python/3.10}), Lmod mostrará un error de conflicto. Utilice \texttt{swap} para intercambiarlos:
+
+\begin{terminal}
+# Si tiene conflictos con otra versión de Python
+module swap python/python-version-actual python/cunqa
+\end{terminal}
+
+% \subsection{Configuración de Librerías (Opcional)}
+% \begin{tcolorbox}[colframe=red!75!black, colback=red!5!white, title=¡Importante!]
+% Para que el comando \texttt{qraise} (compilado en C++) funcione correctamente, debe exportar manualmente la ruta de las librerías dinámicas:
+
+% \begin{lstlisting}[language=bash, numbers=none, basicstyle=\ttfamily\small]
+% export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/lusitania_apps/python/python-3.10.6/lib
+% \end{lstlisting}
+% \end{tcolorbox}
+
+% ==========================================
+% 2. GESTIÓN DE RECURSOS
+% ==========================================
+\section{Gestión de Recursos y Ciclo de Vida}
+
+El flujo de trabajo en CUNQA consta de tres pasos: Iniciar Servicio (\texttt{qraise}), Ejecutar Experimentos (Python) y Detener Servicio (\texttt{qdrop}).
+
+\subsection{Paso 1: Iniciar el Servicio (qraise)}
+El comando \texttt{qraise} solicita recursos a SLURM y levanta los daemons de simulación. En este ejemplo se solicitan 2 vQPUs durante 30 min:
+
+\begin{terminal}
+qraise -n 2 -t 00:30:00 --co-located
+\end{terminal}
+
+\newpage
+\subsubsection{Tabla Completa de Parámetros}
+Opciones disponibles en \texttt{qraise} para el despliegue de vQPUs:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+% Ajustamos anchos para acomodar '--noise-properties <string>' sin romper el formato
+\begin{tabular}{@{} l p{4.8cm} p{8.0cm} @{}}
+    \toprule
+    \textbf{Flag} & \textbf{Opción Larga} & \textbf{Descripción} \\ 
+    \midrule
+    
+    % --- BÁSICOS ---
+    \multicolumn{3}{c}{\textbf{\textit{Despliegue General y Agrupación}}} \\
+    \texttt{-n} & \texttt{--num\_qpus <int>} & (Obligatorio) Número de vQPUs a levantar (Defecto: 0). \\
+    \texttt{-t} & \texttt{--time <str>} & (Obligatorio) Tiempo límite de la reserva (HH:MM:SS). \\
+    \texttt{} & \texttt{--family\_name <str>} & Nombre para identificar el grupo de vQPUs (Defecto: "default"). \\
+    \texttt{} & \texttt{--co-located} & \textbf{Esencial en Lusitania.} Permite acceder a las vQPUs desde cualquier nodo (ej. el nodo de login) en lugar de limitarlo al nodo físico desplegado. \\
+    \midrule
+    
+    % --- RECURSOS SLURM ---
+    \multicolumn{3}{c}{\textbf{\textit{Gestión de Recursos (SLURM)}}} \\
+    \texttt{-c} & \texttt{--cores <int>} & Número de cores de CPU asignados a cada vQPU (Defecto: 2). \\
+    \texttt{-p} & \texttt{--partition <str>} & Partición de SLURM solicitada para el despliegue. \\
+    \texttt{} & \texttt{--mem-per-qpu <int>} & Cantidad de memoria RAM (en GB) asignada a cada vQPU. \\
+    \texttt{-N} & \texttt{--n\_nodes <int>} & Número total de nodos de cómputo a utilizar (Defecto: 1). \\
+    \texttt{} & \texttt{--node\_list <str>} & Lista explícita de nodos destino (ej. \texttt{s01r2b12,s01r2b13}). \\
+    \texttt{} & \texttt{--qpus\_per\_node <int>} & Número de vQPUs a desplegar dentro de cada nodo físico. \\
+    \texttt{} & \texttt{--gpu} & Habilita la simulación cuántica acelerada por GPU. \\
+    \midrule
+
+    % --- COMUNICACIONES ---
+    \multicolumn{3}{c}{\textbf{\textit{Comunicaciones Distribuidas}}} \\
+    \texttt{} & \texttt{--classical\_comm} & Habilita las comunicaciones clásicas entre vQPUs. \\
+    \texttt{} & \texttt{--quantum\_comm} & Habilita las comunicaciones cuánticas entre vQPUs. \\
+    \midrule
+    
+    % --- SIMULACIÓN Y RUIDO ---
+    \multicolumn{3}{c}{\textbf{\textit{Backend, Simulación y Ruido}}} \\
+    \texttt{-sim} & \texttt{--simulator <str>} & Motor responsable de ejecutar la simulación (Defecto: "Aer"). \\
+    \texttt{-b} & \texttt{--backend <str>} & Ruta al archivo de configuración del backend. \\
+    \texttt{--noise-prop} & \texttt{--noise-properties <str>} & Ruta al JSON de propiedades de ruido (Solo soportado en Aer). \\
+    \texttt{-fq} & \texttt{--fakeqmio <str>} & Simula el chip QMIO cargando un set de calibraciones. (\textit{Nota: Oficialmente soportado solo al ejecutar en CESGA}). \\
+    \texttt{} & \texttt{--no-thermal-relaxation} & Desactiva la relajación térmica en backends ruidosos (Defecto: false). \\
+    \texttt{} & \texttt{--no-readout-error} & Desactiva el error de lectura en backends ruidosos (Defecto: false). \\
+    \texttt{} & \texttt{--no-gate-error} & Desactiva el error de puertas en backends ruidosos (Defecto: false). \\
+    \midrule
+    
+    % --- HARDWARE REAL ---
+    \multicolumn{3}{c}{\textbf{\textit{Hardware Real}}} \\
+    \texttt{} & \texttt{--qmio} & Despliega infraestructura híbrida conectando con el ordenador cuántico QMIO real (\textit{Exclusivo de las instalaciones del CESGA}). \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection{Selección de Partición (\texttt{sinfo})}
+
+En el clúster Lusitania, los nodos de cómputo están organizados en diferentes colas o particiones. Puede especificar en qué partición desea desplegar sus vQPUs utilizando el flag \texttt{-p} o \texttt{--partition} al ejecutar el comando \texttt{qraise}.
+
+Para consultar las particiones disponibles, los recursos libres y el estado general del clúster, ejecute el comando:
+
+\begin{terminal}
+sinfo
+\end{terminal}
+
+\textbf{Ejemplo de salida esperada:}
+\begin{terminal}[listing options={columns=fixed, basicstyle=\color{gray!80}\ttfamily\small, literate={}}]
+PARTITION   AVAIL  TIMELIMIT  NODES  STATE NODELIST
+qcomputaex     up   infinite      1  alloc s02r2b05
+lusi2          up   infinite      4 drain* s02r2b[51-54]
+lusi2          up   infinite    108   idle s02r1b[43-83],s02r2b[11-50]
+atoms          up   infinite     14   idle s02r1b[01-12,15-16]
+lusitania* up   infinite     14   idle s01r3b[03-16]
+uex10          up   infinite      9  alloc s01r2b[02-10]
+fatnode        up   infinite      1    mix fatcn
+\end{terminal}
+
+\vspace{0.3cm}
+\textbf{Interpretación de las columnas principales:}
+\begin{itemize}
+    \item \textbf{PARTITION:} Nombre de la cola de ejecución. El asterisco (\texttt{*}) indica cuál es la partición por defecto (en este caso, \texttt{lusitania}). Si no especifica el flag \texttt{-p}, su trabajo se enviará automáticamente a esta cola.
+    \item \textbf{AVAIL:} Estado operativo de la partición (\texttt{up} significa que está activa y admitiendo trabajos).
+    \item \textbf{NODES:} Cantidad de nodos físicos que se encuentran en el estado indicado.
+    \item \textbf{STATE:} Estado actual de los nodos. Los valores más comunes son:
+    \begin{itemize}
+        \item \texttt{idle}: Libres y listos para ejecutar simulaciones.
+        \item \texttt{alloc}: Totalmente ocupados por otros trabajos.
+        \item \texttt{mix}: Parcialmente ocupados (aún tienen algunos cores o memoria libre).
+        \item \texttt{drain}: Fuera de servicio o reservados para mantenimiento.
+    \end{itemize}
+\end{itemize}
+\subsection{Monitorización de vQPUs (\texttt{squeue} y \texttt{qinfo})}
+
+Una vez solicitado el despliegue mediante el comando \texttt{qraise}, el proceso de monitorización para confirmar que todo está listo consta de dos pasos fundamentales: verificar la asignación en el gestor de colas y consultar el estado interno de CUNQA.
+
+\subsubsection{Paso 1: Verificación de recursos en SLURM (\texttt{squeue})}
+Antes de ejecutar su algoritmo en Python, es estrictamente necesario confirmar que el clúster le ha asignado los recursos y el trabajo ha comenzado. Para ello, compruebe la cola de trabajos:
+
+\begin{terminal}
+squeue
+\end{terminal}
+
+\textbf{Salida esperada:}
+\begin{terminal}[listing options={columns=fixed, basicstyle=\color{gray!80}\ttfamily\small, literate={}}]
+JOBID   PARTITION  NAME    USER      ST  TIME  NODES NODELIST(REASON)
+718298  lusitania  qraise  usuario   R   0:05  1     s01r3b18
+\end{terminal}
+
+\vspace{0.3cm}
+Debe prestar especial atención a dos columnas:
+\begin{itemize}
+    \item \textbf{ST (Status):} Su trabajo debe marcar \textbf{R} (\textit{Running}). Si marca \textbf{PD} (\textit{Pending}), significa que está en la cola esperando a que haya nodos libres.
+    \item \textbf{NODELIST:} Esta columna revela el nombre del nodo físico exacto donde se han levantado sus vQPUs (en el ejemplo superior, \texttt{s01r3b18}). Anote este valor para el siguiente paso.
+\end{itemize}
+
+\subsubsection{Paso 2: Inspección interna de CUNQA (\texttt{qinfo})}
+Una vez que el trabajo está en estado \texttt{R}, puede emplear la herramienta nativa \texttt{qinfo} para obtener información detallada sobre las vQPUs que están corriendo bajo el capó (puertos abiertos, simulador empleado, etc.).
+
+\textbf{Opciones de consulta:}
+\begin{itemize}
+    \item \texttt{qinfo <nodo>}: Muestra el estado de las vQPUs alojadas en el nodo físico especificado por parámetro.
+    \item \texttt{qinfo -m} o \texttt{--mynode}: Muestra el estado de las vQPUs locales al nodo donde se ejecuta el comando (muy útil si se utiliza dentro de un script \textit{sbatch} o tras acceder directamente al nodo de cómputo).
+\end{itemize}
+
+\textbf{Ejemplo de uso:}
+Utilizando el nombre del nodo que descubrimos en el paso anterior (\texttt{s01r3b18}), ejecutamos desde el nodo de \textit{login}:
+
+\begin{terminal}
+qinfo s01r3b18
+\end{terminal}
+
+
+\subsection{Logs y Depuración}
+
+Al solicitar un despliegue con \texttt{qraise}, el gestor de colas SLURM captura toda la salida estándar (mensajes de inicialización de CUNQA) y los posibles errores del sistema, guardándolos automáticamente en un archivo de texto. Este archivo se crea en el mismo directorio desde donde ejecutó el comando.
+
+El archivo generado sigue la nomenclatura \texttt{qraise\_<JOBID>}. Para visualizar su contenido y comprobar que las vQPUs han arrancado correctamente, utilice el comando \texttt{cat} (sustituyendo el número por su identificador real):
+
+\begin{terminal}
+cat qraise_718298
+\end{terminal}
+
+\textbf{Salida esperada:}
+\begin{terminal}[listing options={columns=fixed, basicstyle=\color{gray!80}\ttfamily\small, literate={}}]
+(03/11/26 10:00:00 AM) [Executor 718298] debug: Raising executor 
+with Aer.
+(03/11/26 10:00:01 AM) [QPU 718298_0] debug: Raising QPU with quantum 
+communications.
+(03/11/26 10:00:01 AM) [QPU 718298_0] debug: Server bound to 
+tcp://10.2.1.38:38105
+(03/11/26 10:00:01 AM) [QPU 718298_1] debug: Server bound to 
+tcp://10.2.1.38:42083
+\end{terminal}
+
+\vspace{0.3cm}
+\textbf{¿Qué debemos buscar en este archivo?}
+\begin{itemize}
+    \item \textbf{Inicialización (\texttt{Raising...}):} Confirma el motor de simulación que se está utilizando (ej. \texttt{Aer}) y si los protocolos de comunicación (cuántica o clásica) se han activado correctamente.
+    \item \textbf{Apertura de puertos (\texttt{Server bound to...}):} Es la señal definitiva de éxito. Indica la dirección IP interna y el puerto por donde la QPU virtual está escuchando instrucciones. \textbf{Una vez vea estas líneas, las vQPUs están listas para recibir comandos desde su script de Python.}
+    \item \textbf{Errores de SLURM:} Si el trabajo falla prematuramente (por ejemplo, por solicitar más cores de los permitidos o por falta de librerías dinámicas), los errores fatales de \texttt{srun} aparecerán en las primeras líneas de este log.
+\end{itemize}
+
+\begin{infobox}{Truco de Experto: Monitorización en tiempo real}
+Si el clúster está muy saturado o el trabajo tarda en arrancar, puede monitorizar la creación del log en tiempo real (como si fuera una pantalla de terminal en vivo) utilizando el comando \texttt{tail}. Para salir de esta vista interactiva, simplemente pulse \texttt{Ctrl + C}:
+\end{infobox}
+
+\begin{terminal}
+tail -f qraise_718298
+\end{terminal}
+
+\subsection{Liberación de Recursos (\texttt{qdrop})}
+
+El comando \texttt{qdrop} se utiliza para terminar (\textit{drop}) las QPUs virtuales que fueron desplegadas previamente con \texttt{qraise}. Al ejecutar este comando, se cancelan los trabajos asociados en SLURM y se liberan los recursos computacionales del clúster.
+
+Aunque el servicio se detiene automáticamente al alcanzar el tiempo límite (\texttt{-t}) asignado por SLURM, es una \textbf{buena práctica en entornos HPC} liberar los recursos manualmente en cuanto su algoritmo termine de ejecutarse para que otros usuarios puedan utilizarlos.
+
+\textbf{Sinopsis del comando:}
+\begin{terminal}
+qdrop [IDS...] [OPTIONS]
+\end{terminal}
+
+\vspace{0.3cm}
+\textbf{Opciones de selección de objetivos:}
+\begin{itemize}
+    \item \texttt{IDS...}: IDs de los trabajos de SLURM que se desean eliminar. Se pueden proporcionar múltiples IDs separados por espacios.
+    \item \texttt{--fam}, \texttt{--family\_name <str>}: Elimina todas las vQPUs que pertenezcan a la familia especificada (útil si usó el flag \texttt{-fam} al levantarlas).
+    \item \texttt{--all}: Elimina todos los trabajos activos de \texttt{qraise} del usuario actual.
+\end{itemize}
+
+\subsubsection{Ejemplos de Uso}
+
+\textbf{Opción A: Detener trabajos específicos (por ID)}
+Puede detener un único trabajo o varios a la vez pasando sus identificadores separados por un espacio:
+\begin{terminal}
+qdrop 718298 718299
+\end{terminal}
+
+\textbf{Salida esperada:}
+\begin{terminal}[listing options={columns=fixed, basicstyle=\color{gray!80}\ttfamily\small, literate={}}]
+Removed job(s) with ID(s): 718298, 718299
+\end{terminal}
+
+\vspace{0.3cm}
+\textbf{Opción B: Detener por familia}
+Si levantó un conjunto de vQPUs bajo una misma etiqueta, puede borrarlas todas de golpe sin necesidad de buscar sus IDs:
+\begin{terminal}
+qdrop --family_name grover_test
+\end{terminal}
+
+\vspace{0.3cm}
+\textbf{Opción C: Limpieza total (\texttt{--all})}
+El método más rápido y recomendado si ya ha terminado su sesión de trabajo y quiere asegurarse de no dejar ningún proceso "fantasma" consumiendo horas de cómputo en Lusitania:
+\begin{terminal}
+qdrop --all
+\end{terminal}
+
+\begin{infobox}{Nota sobre filtros combinados}
+Si se proporcionan múltiples selectores a la vez (por ejemplo, especificando un \texttt{ID} y además una \texttt{--family\_name}), el comando \texttt{qdrop} intentará eliminar \textbf{todas} las vQPUs que coincidan con cualquiera de los criterios indicados.
+\end{infobox}
+% ==========================================
+% 3. EJECUCIÓN DE CÓDIGO
+% ==========================================
+\section{Ejecución de Experimentos}
+
+CUNQA permite dos flujos de trabajo principales para desplegar las vQPUs y ejecutar sus circuitos cuánticos: un enfoque mixto (desplegando desde la terminal y ejecutando en Python) y un enfoque 100\% programático desde Python.
+
+% --- CUADRO INFORMATIVO ACTUALIZADO (CUNQA 2.0) ---
+\begin{infobox}{¡Atención: Configuración Crítica en Lusitania!}
+En el clúster Lusitania, es \textbf{obligatorio} que las vQPUs se levanten en modo \textit{co-located}. 
+
+Dado que SLURM asignará los recursos a nodos de cómputo distintos al nodo de \textit{login} donde usted ejecuta el script, debe usar \texttt{--co-located} en la terminal y el parámetro \texttt{co\_located=True} dentro de la función \texttt{get\_QPUs()}. Si no lo hace, su script de Python no encontrará las máquinas virtuales.
+\end{infobox}
+
+\subsection{Flujo 1: Despliegue Mixto (Bash + Python)}
+Este es el método más recomendado, ya que separa la reserva de recursos en SLURM de la lógica del algoritmo.
+
+\textbf{1. Levantar las vQPUs desde la terminal:}
+\begin{terminal}
+qraise -n 4 -t 01:00:00 --co-located
+\end{terminal}
+
+\textbf{2. Ejecutar el código Python (\texttt{demo\_mixto.py}):}
+\begin{lstlisting}[style=pythonstyle, caption=demo\_mixto.py]
+from cunqa.qpu import get_QPUs, run
+from cunqa.qjob import gather
+from cunqa.circuit import CunqaCircuit
+
+# 1. Obtener las QPUs levantadas previamente por bash (Critico: co_located=True)
+qpus = get_QPUs(co_located=True)
+
+# 2. Definir un circuito de entrelazamiento (Bell State)
+qc = CunqaCircuit(num_qubits=2)
+qc.h(0)
+qc.cx(0,1)
+qc.measure_all()
+
+# 3. Enviar el mismo circuito a las 4 vQPUs a la vez
+qcs = [qc] * 4
+qjobs = run(qcs, qpus, shots=1000)
+
+# 4. Recopilar e imprimir los resultados
+results = gather(qjobs)
+for i, result in enumerate(results):
+    print(f"vQPU {i} -> Counts: {result.counts}")
+\end{lstlisting}
+
+\subsection{Flujo 2: Despliegue 100\% en Python}
+En este caso, la reserva de recursos en SLURM, la ejecución y la liberación de los mismos se realiza de principio a fin dentro del mismo script de Python.
+
+\begin{lstlisting}[style=pythonstyle, caption=demo\_python.py]
+from cunqa.qpu import qraise, get_QPUs, run, qdrop
+from cunqa.qjob import gather
+from cunqa.circuit import CunqaCircuit
+
+# 1. Desplegar QPUs directamente desde Python
+print("Solicitando recursos a SLURM...")
+family = qraise(4, "00:10:00", simulator="Aer", co_located=True)
+
+# 2. Conectar con las QPUs reservadas
+qpus = get_QPUs(co_located=True)
+
+# 3. Ejecutar circuito
+qc = CunqaCircuit(num_qubits=2)
+qc.h(0); qc.cx(0,1); qc.measure_all()
+qjobs = run([qc]*4, qpus, shots=1000)
+
+# 4. Mostrar resultados
+for result in gather(qjobs):
+    print(f"Counts: {result.counts}")
+
+# 5. Liberar los recursos de SLURM
+print("Liberando recursos...")
+qdrop(family)
+\end{lstlisting}
+
+\vspace{0.5cm}
+\textbf{Resumen del Ciclo de Vida Correcto:}
+Sea cual sea el flujo que elija, es fundamental respetar el orden secuencial de operaciones para evitar recursos huérfanos o errores de conexión en el clúster:
+
+\begin{enumerate}
+    \item \textbf{Reserva:} Iniciar el entorno solicitando los nodos a SLURM (\texttt{qraise}).
+    \item \textbf{Verificación:} Si usa el flujo mixto, asegurarse mediante \texttt{squeue} de que el trabajo ha pasado a estado \texttt{R} (Running) y los puertos están abiertos.
+    \item \textbf{Ejecución:} Lanzar la lógica de su circuito (\texttt{run} y \texttt{gather}).
+    \item \textbf{Finalización:} Apagar las vQPUs y liberar los nodos físicos con \texttt{qdrop}.
+\end{enumerate}
+% \subsection{Repositorio de Ejemplos}
+% Puede descargar una suite completa de ejemplos (QPE distribuido, Teledata, VQA) desde el repositorio de la version de Lusitania:
+% \begin{infobox}{GitHub}
+% \url{https://github.com/Cerrudoxx/cunqa/tree/cunqa-ex-module}
+% \end{infobox}
+% Ejecute el script de validación incluido para probar todos los casos:
+% \begin{terminal}
+% usuario@lusitania~> ./lanzar_pruebas.sh
+% \end{terminal}
+
+% ==========================================
+% 4. CAPACIDADES AVANZADAS (VERSIÓN AMPLIADA)
+% ==========================================
+\section{Capacidades Avanzadas}
+
+CUNQA permite emular arquitecturas de computación distribuida complejas. Para ello, es necesario iniciar las vQPUs con los flags adecuados y utilizar la API extendida de la clase \texttt{CunqaCircuit}.
+
+\subsection{Comunicaciones Clásicas (CC)}
+
+Este modelo permite a los procesos intercambiar información clásica durante la ejecución (de forma similar a como operan los programas MPI en entornos HPC tradicionales). En el contexto cuántico, se utiliza para enviar los resultados de medidas (bits clásicos) de una vQPU remota a otra. 
+
+Esto es fundamental para algoritmos que requieren \textit{feed-forward} (tomar decisiones dinámicas sobre operaciones cuánticas locales basadas en los resultados de una medida remota), como ocurre en la Teleportación Cuántica o en los códigos de Corrección de Errores.
+
+\begin{infobox}{Requisito de Infraestructura}
+Para habilitar los canales de comunicación clásicos entre nodos (vía ZeroMQ), es \textbf{obligatorio} iniciar \texttt{qraise} con el flag \texttt{--classical\_comm} en la terminal (o \texttt{classical\_comm=True} si levanta las vQPUs desde Python). Además, recuerde mantener siempre activo el modo \texttt{co\_located}.
+\end{infobox}
+
+\textbf{Primitivas de la API de CUNQA 2.0:}
+Para poder condicionar operaciones en base a bits remotos, debe asignar un \texttt{id} único a cada circuito y seguir estos tres pasos usando los métodos de la clase \texttt{CunqaCircuit}:
+
+\begin{itemize}
+    \item \textbf{Medir y Enviar (\texttt{send}):} Tras medir un qubit y guardar el valor en un bit clásico local, utilice \texttt{send(clbits, recving\_circuit)} para transmitir ese bit al circuito destino.
+    \item \textbf{Recibir (\texttt{recv}):} En el circuito destino, utilice \texttt{recv(clbits, sending\_circuit)} para capturar la transmisión y almacenarla en el registro clásico local. \textit{Nota: La ejecución de este circuito se bloqueará hasta que el bit sea recibido.}
+    \item \textbf{Control Condicional (\texttt{cif}):} Utilice el bloque de contexto \texttt{with circuit.cif(clbits) as subcircuit:} para aplicar operaciones cuánticas (ej. una puerta X) únicamente si el valor del bit clásico recibido es 1.
+\end{itemize}
+
+\begin{lstlisting}[style=pythonstyle, caption=Ejemplo: Control Clásico Remoto entre dos vQPUs]
+from cunqa.qpu import get_QPUs, qraise, qdrop, run
+from cunqa.circuit import CunqaCircuit
+from cunqa.qjob import gather
+
+# 1. Reservar 2 vQPUs con comunicaciones clasicas habilitadas
+print("Solicitando nodos a SLURM...")
+family = qraise(2, "00:10:00", classical_comm=True, co_located=True)
+qpus = get_QPUs(family=family, co_located=True)
+
+# 2. Definir los circuitos y sus IDs (vital para el enrutamiento de red)
+circuit_1 = CunqaCircuit(num_qubits=1, num_clbits=1, id="circuit_1")
+circuit_2 = CunqaCircuit(num_qubits=1, num_clbits=1, id="circuit_2")
+
+# --- LOGICA DEL EMISOR (circuit_1) ---
+circuit_1.h(0)
+circuit_1.measure(qubit=0, clbit=0)
+circuit_1.send(clbits=0, recving_circuit="circuit_2")
+
+# --- LOGICA DEL RECEPTOR (circuit_2) ---
+# Recibe el bit de circuit_1 y lo guarda en su clbit 0 local
+circuit_2.recv(clbits=0, sending_circuit="circuit_1")
+
+# Aplica una puerta X en su qubit 0 solo si el clbit 0 recibido vale 1
+with circuit_2.cif(clbits=0) as subcircuit:
+    subcircuit.x(0)
+
+circuit_2.measure(qubit=0, clbit=0)
+
+# 3. Ejecucion distribuida
+# CUNQA mapea automaticamente circuit_1 a qpus y circuit_2 a qpus
+distributed_qjobs = run([circuit_1, circuit_2], qpus, shots=1000)
+results = gather(distributed_qjobs)
+
+for qpu, result in zip(qpus, results):
+    print(f"Resultados de vQPU {qpu.id}: {result.counts}")
+
+# 4. Limpieza de recursos
+qdrop(family)
+\end{lstlisting}
+
+\subsection{Comunicaciones Cuánticas (QC)}
+
+Este paradigma es exclusivo de la computación cuántica distribuida y no tiene contraparte clásica. Habilita la transferencia de información cuántica (estados superpuestos o entrelazados) entre diferentes vQPUs mediante el consumo de pares entrelazados (EPR pairs) compartidos previamente. 
+
+\begin{infobox}{Requisito de Infraestructura}
+Para utilizar estos protocolos, es \textbf{obligatorio} iniciar \texttt{qraise} con el flag \texttt{--quantum\_comm} (o \texttt{quantum\_comm=True} desde Python). 
+
+\textit{Nota:} Al habilitar las comunicaciones cuánticas, las directivas de comunicación clásica (CC) detalladas en la sección anterior quedan automáticamente permitidas en sus circuitos. Recuerde mantener siempre el modo \texttt{co\_located}.
+\end{infobox}
+
+\subsubsection{Teledata (Teletransportación de Estado)}
+El protocolo \textit{Teledata} mueve el estado cuántico exacto de un qubit desde una vQPU hacia otra. Debido al teorema de no clonación de la mecánica cuántica, el estado en el qubit de origen se destruye y \textbf{se resetea automáticamente al estado $|0\rangle$} tras el envío.
+
+En la API de CUNQA, esto se implementa mediante las primitivas \texttt{qsend} y \texttt{qrecv}:
+
+\begin{lstlisting}[style=pythonstyle, caption=Ejemplo: Construcción remota de un estado entrelazado (Teledata)]
+from cunqa.qpu import get_QPUs, qraise, qdrop, run
+from cunqa.circuit import CunqaCircuit
+from cunqa.qjob import gather
+
+# 1. Despliegue con comunicaciones cuanticas
+family = qraise(2, "00:10:00", quantum_comm=True, co_located=True)
+qpus = get_QPUs(family=family, co_located=True)
+
+# 2. Diseño de circuitos
+circuit_1 = CunqaCircuit(num_qubits=2, id="circuit_1")
+circuit_2 = CunqaCircuit(num_qubits=2, id="circuit_2")
+
+# Entrelazamos los qubits locales del circuito 1
+circuit_1.h(0)
+circuit_1.cx(0,1)
+
+# --- INICIO PROTOCOLO TELEDATA ---
+# Teleportamos el estado del qubit 1 (del circuit_1) al qubit 0 (del circuit_2)
+circuit_1.qsend(1, "circuit_2")
+circuit_2.qrecv(0, "circuit_1")
+# --- FIN PROTOCOLO TELEDATA ---
+
+# Continuamos operando en el circuito destino
+circuit_2.cx(0,1)
+
+circuit_1.measure_all()
+circuit_2.measure_all()
+
+# 3. Ejecucion y Limpieza (gather bloquea hasta terminar ambas simulaciones)
+qjobs = run([circuit_1, circuit_2], qpus, shots=1000)
+for qpu, result in zip(qpus, gather(qjobs)):
+    print(f"Resultados de vQPU {qpu.id}: {result.counts}")
+
+qdrop(family)
+\end{lstlisting}
+
+\subsubsection{Telegate (Puertas Lógicas Distribuidas)}
+El protocolo \textit{Telegate} permite ejecutar una puerta de dos qubits (como una CNOT) donde el qubit de control reside físicamente en una vQPU y el qubit objetivo (\textit{target}) en otra. 
+
+A nivel de código, esto se logra "exponiendo" un qubit local para que un circuito remoto pueda referenciarlo temporalmente:
+
+\begin{lstlisting}[style=pythonstyle, caption=Ejemplo: Puerta CNOT Distribuida (Telegate)]
+circuit_A = CunqaCircuit(num_qubits=1, id="circuito_A")
+circuit_B = CunqaCircuit(num_qubits=2, id="circuito_B")
+
+circuit_A.h(0)
+
+# QPU A tiene el control (qubit 0) y lo expone a la QPU B
+with circuit_A.expose(qubit=0, target_circuit="circuito_B") as ctrl_ref:
+    
+    # Dentro de este bloque, 'ctrl_ref' es un enlace cuantico valido para B
+    # Aplicamos una CNOT controlada por A y con target en el qubit 1 de B
+    circuit_B.cx(control=ctrl_ref, target=1)
+
+circuit_A.measure_all()
+circuit_B.measure_all()
+\end{lstlisting}
+
+\vspace{0.3cm}
+\textbf{Nota sobre el rendimiento (Execution):} Cuando se solicitan comunicaciones cuánticas, las vQPUs desplegadas comparten internamente un simulador conjunto por debajo (ZeroMQ/MPI). Por lo tanto, la llamada a \texttt{gather()} es estrictamente bloqueante y esperará a que toda la simulación global haya concluido para devolver los resultados y los tiempos de ejecución (\texttt{result.time\_taken}).
+
+% \subsection{Simulación Realista (FakeQmio)}
+% CUNQA permite simular sus algoritmos utilizando las características físicas reales del ordenador cuántico \textbf{QMIO} del CESGA. Al usar este modo, el emulador carga un archivo de calibración real (tiempos de coherencia T1/T2, fidelidad de puertas, errores de lectura) y simula el ruido asociado.
+
+% \begin{terminal}
+% # Simular con el modelo de ruido completo del QMIO
+% usuario@lusitania~> qraise -n 1 -t 10:00 --fakeqmio
+% \end{terminal}
+
+% \textbf{Depuración de Ruido:}
+% Puede desactivar componentes específicos del ruido para aislar errores en su algoritmo utilizando los siguientes flags adicionales:
+
+% \begin{terminal}
+% # Ejemplo: Simular geometria del QMIO pero SIN errores de lectura
+% usuario@lusitania~> qraise -n 1 -t 10:00 --fakeqmio --no-readout-error
+% \end{terminal}
+
+% Otras opciones de depuración incluyen \texttt{--no-gate-error} y \texttt{--no-thermal-relaxation}.
+
+% ==========================================
+% ANEXO: ADMINISTRADORES
+% ==========================================
+% \newpage
+% \appendix
+% \section{Anexo: Instalación para Administradores}
+
+% Esta sección detalla el despliegue de CUNQA como módulo global en Lusitania (Lustre/NFS).
+
+% \subsection{Arquitectura de Archivos Híbrida}
+% Para garantizar compatibilidad multiusuario y evitar problemas de permisos:
+
+% \begin{itemize}
+%     \item \textbf{Directorio de Instalación (Shared/Read-Only):} Contiene los binarios compilados, librerías y esquemas estáticos. Los usuarios NO tienen permisos de escritura aquí.
+%     \item \textbf{Directorio de Usuario (Local/Read-Write):} El software detecta el \texttt{\$HOME} del usuario en tiempo de ejecución y crea automáticamente \texttt{\textasciitilde/.cunqa/} para almacenar logs, configuraciones dinámicas (\texttt{qpus.json}) y archivos temporales.
+%     \item \textbf{Nota:} Se ha eliminado la dependencia de la variable \texttt{\$STORE}.
+% \end{itemize}
+
+% \subsection{Script de Despliegue Automatizado}
+% El script \texttt{deploy\_module.sh} (rama \texttt{cunqa-ex-module}) realiza la compilación \textit{Release}, configura el \texttt{RPATH} y copia los archivos.
+
+% \begin{terminal}
+% # 1. Dar permisos de ejecución
+% usuario@lusitania~> chmod +x deploy_module.sh
+
+% # 2. Ejecutar indicando la ruta destino
+% # Sintaxis: ./deploy_module.sh <RUTA_DESTINO>
+% usuario@lusitania~> ./deploy_module.sh /lusitania_apps/software/cunqa/0.3.1
+% \end{terminal}
+
+\end{document}

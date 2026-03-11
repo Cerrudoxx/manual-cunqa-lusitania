@@ -1,0 +1,23 @@
+# --- Python & Entorno ---
+.venv/
+__pycache__/
+*.pyc
+
+# --- Sphinx ---
+# Ignoramos toda la carpeta de compilación (donde se genera la web)
+docs/build/
+
+# --- LaTeX ---
+# Ignoramos archivos auxiliares que genera el compilador de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.pdf
+*.gz
+*.fdb_latexmk
+*.fls
+
+# --- Sistema ---
+.DS_Store
+Thumbs.db

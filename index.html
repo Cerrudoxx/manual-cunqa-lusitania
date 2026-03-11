@@ -154,12 +154,15 @@ entorno y sus dependencias de compilación.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Advertencia</p>
-<p>Aviso Importante: Parche Temporal Para que Python detecte
-correctamente el framework CUNQA y sus dependencias internas, es
+<p><strong>Aviso Importante: Parche Temporal</strong></p>
+<p>Para que Python detecte correctamente el framework CUNQA y sus dependencias internas, es
 necesario configurar la variable de entorno <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>.
 Actualmente estamos trabajando para que esta ruta se integre de
 manera automática al cargar el módulo; mientras tanto, es necesario
 aplicar este comando como parche temporal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/lusitania_apps/cunqa:/lusitania_apps/cunqa/.venv/lib/python3.10/site-packages:/lusitania_apps/python/python-3.10-cunqa-ex/lib/python3.10/site-packages:<span class="nv">$PYTHONPATH</span>
+</pre></div>
+</div>
 </div>
 </section>
 <section id="resolucion-de-conflictos-module-swap">

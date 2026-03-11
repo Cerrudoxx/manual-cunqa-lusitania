@@ -64,12 +64,18 @@ Utilice el siguiente comando para cargar los módulos:
 
 .. warning::
 
-   Aviso Importante: Parche Temporal Para que Python detecte
-   correctamente el framework CUNQA y sus dependencias internas, es
+   **Aviso Importante: Parche Temporal** 
+   
+   Para que Python detecte correctamente el framework CUNQA y sus dependencias internas, es
    necesario configurar la variable de entorno ``PYTHONPATH``.
    Actualmente estamos trabajando para que esta ruta se integre de
    manera automática al cargar el módulo; mientras tanto, es necesario
    aplicar este comando como parche temporal:
+
+   .. code-block:: bash
+
+      export PYTHONPATH=/lusitania_apps/cunqa:/lusitania_apps/cunqa/.venv/lib/python3.10/site-packages:/lusitania_apps/python/python-3.10-cunqa-ex/lib/python3.10/site-packages:$PYTHONPATH
+
 
 Resolución de Conflictos (Module Swap)
 --------------------------------------
